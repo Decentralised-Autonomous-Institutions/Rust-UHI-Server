@@ -1,0 +1,36 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+# Validation and Error Prevention
+
+## Type Safety Validation
+- Check for proper error handling with `Result<T, E>`
+- Avoid `unwrap()` and `expect()` in production code
+- Use `Option<T>` for values that may not exist
+- Validate function inputs and handle edge cases
+
+## Memory Safety Checks
+- Verify lifetimes are properly specified
+- Check for potential memory leaks
+- Ensure proper use of reference counting (`Rc`/`Arc`)
+- Validate mutable references don't cause data races
+
+## API Consistency
+- Ensure consistent naming patterns
+- Verify proper trait implementations
+- Check documentation completeness
+- Validate public API against Rust guidelines
+
+## Performance Considerations
+- Check for unnecessary clones or allocations
+- Verify proper use of borrowing
+- Identify potential performance bottlenecks
+- Consider benchmarking for critical paths
+
+## Common Issues to Check
+- Avoid blocking operations on async execution paths
+- Ensure error propagation is consistent
+- Check for unhandled edge cases
+- Verify proper cleanup of resources

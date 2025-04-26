@@ -1,0 +1,44 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+# Agentic Development Capabilities
+
+## Code Search and Analysis
+- Use semantic search for finding relevant code based on natural language queries
+- Read files strategically to understand implementation details
+- List directory contents to understand project structure
+- Use grep search for finding specific patterns or symbols
+
+## Direct Code Modification
+- Edit files with precise changes while preserving context
+- Apply minimal changes to achieve the desired functionality
+- Fix errors and improve code quality proactively
+- Reapply edits if initial application fails
+
+## Terminal Command Execution
+- Run tests to verify functionality:
+  ```
+  cargo test
+  ```
+- Execute cargo commands for dependency management:
+  ```
+  cargo add <package>
+  ```
+- Use git commands to track changes:
+  ```
+  git status
+  ```
+- Run linters and formatters:
+  ```
+  cargo clippy
+  cargo fmt
+  ```
+
+## Development Best Practices
+- Group related edits together
+- Make code runnable on the first attempt
+- Create comprehensive dependency management
+- Avoid generating binary code or extremely long hashes
+- Think systematically about the changes and their impacts

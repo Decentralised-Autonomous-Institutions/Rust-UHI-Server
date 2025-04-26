@@ -1,0 +1,45 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+# Rust Coding Guidelines
+
+## Package Organization
+- Use consistent crate naming conventions (snake_case)
+- Ensure documentation files exist: README, LICENSE, CHANGELOG
+- Minimize dependencies and follow semantic versioning
+- Create appropriate setup files for new components
+
+## Documentation
+- Document all public items with rustdoc
+- Include examples in documentation
+- Use crate-level documentation to explain overall purpose
+- Link to external documentation for complex concepts
+
+## Naming Conventions
+- Variables, functions, modules, crates: `snake_case`
+- Types, traits, enum variants: `UpperCamelCase`
+- Constants and statics: `SCREAMING_SNAKE_CASE`
+- Methods that modify self: use verbs
+- Methods that don't modify self: use nouns
+
+## Error Handling
+- Define custom error types for domain-specific errors
+- Implement `std::error::Error` for error types
+- Use `Result<T, E>` for functions that can fail
+- Preserve underlying error context when transforming errors
+- Panic only for unrecoverable programming errors
+
+## Performance Best Practices
+- Prefer owned types over references where appropriate
+- Use `&[T]` and `&str` over `Vec<T>` and `String` for read-only access
+- Avoid unnecessary allocations
+- Provide `_in_place` variants for operations that modify data
+
+## API Design
+- Make APIs type-safe with minimal escape hatches
+- Use iterators instead of collections when possible
+- Implement standard traits (Debug, Clone, etc.) when appropriate
+- Use builder pattern for complex object construction
+- Make constructors simple and obvious

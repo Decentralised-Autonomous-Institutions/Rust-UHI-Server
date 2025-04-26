@@ -1,0 +1,40 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+# Task Workflow Guidelines
+
+## Required Task Files
+- @docs/tasks.md: Primary source of task definitions
+- [docs/status.md](mdc:docs/status.md): Track progress on tasks
+- [docs/technical.md](mdc:docs/technical.md): Implementation guidelines
+- [docs/architecture.mermaid](mdc:docs/architecture.mermaid): Architecture constraints
+
+## Development Process
+1. **Requirements Analysis**
+   - Parse current task requirements from tasks.md
+   - Extract acceptance criteria
+   - Identify dependencies
+
+2. **Architectural Validation**
+   - Confirm alignment with architecture diagram
+   - Check component interactions
+   - Ensure separation of concerns
+
+3. **Implementation Planning**
+   - Create test modules first (TDD approach)
+   - Implement functionality to pass tests
+   - Ensure 100% test coverage for public API
+
+4. **Progress Tracking**
+   - Update status.md when starting tasks
+   - Document sub-task completion
+   - Record any blockers encountered
+
+## Implementation Steps
+1. Understand current state by examining relevant files
+2. Make targeted edits to implement required functionality
+3. Run tests to validate changes
+4. Update documentation to reflect changes
+5. Run `cargo clippy` and `cargo fmt` for code quality

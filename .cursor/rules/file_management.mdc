@@ -1,0 +1,34 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+# File Management Guidelines
+
+## After Code Changes
+1. Verify architectural compliance against [docs/architecture.mermaid](mdc:docs/architecture.mermaid)
+2. Update progress in [docs/status.md](mdc:docs/status.md) with:
+   - Current progress
+   - New issues encountered
+   - Completed items
+3. Validate changes against [docs/technical.md](mdc:docs/technical.md) specifications
+4. Verify task progress against @docs/tasks.md 
+5. Run quality checks:
+   ```
+   cargo clippy
+   cargo fmt
+   ```
+
+## Code Change Principles
+- Group related edits together in a single change
+- Ensure generated code runs immediately without modification
+- Create appropriate dependency management files for new components
+- Read existing contents before editing
+- Fix linter errors when the solution is clear
+
+## File Organization
+- Keep related functionality in the same module
+- Organize code by feature rather than type
+- Use clear and consistent file naming
+- Limit file size for better maintainability
+- Follow Rust module system conventions

@@ -1,0 +1,80 @@
+flowchart TB
+    subgraph Clients
+        EUA[End User Application]
+        HSPA[Health Service Provider Application]
+    end
+    subgraph "UHI Gateway Service"
+        subgraph "HTTP-Layer"
+            Router[API Router]
+            AuthMiddleware[Authentication Middleware]
+            LoggingMiddleware[Logging Middleware]
+            ErrorMiddleware[Error Handling Middleware]
+        end
+        subgraph "Handler-Layer"
+            SearchHandler[Search Handler]
+            OnSearchHandler[On Search Handler]
+            SelectHandler[Select Handler]
+            OnSelectHandler[On Select Handler]
+            InitHandler[Init Handler]
+            OnInitHandler[On Init Handler]
+            ConfirmHandler[Confirm Handler]
+            OnConfirmHandler[On Confirm Handler]
+            StatusHandler[Status Handler]
+            OnStatusHandler[On Status Handler]
+            NetworkRegistryHandler[Network Registry Handler]
+        end
+        subgraph "Service-Layer"
+            SearchService[Search Service]
+            CatalogService[Catalog Service]
+            OrderService[Order Service]
+            FulfillmentService[Fulfillment Service]
+            ProviderService[Provider Service]
+            NetworkRegistryService[Network Registry Service]
+        end
+        subgraph "Repository-Layer"
+            StorageTrait[Storage Trait]
+        end
+        subgraph "Storage-Implementations"
+            PostgresRepo[PostgreSQL Repository]
+            InMemoryRepo[In-Memory Repository]
+        end
+        subgraph "Database"
+            Postgres[(PostgreSQL)]
+        end
+        subgraph "Cross-Cutting-Concerns"
+            Logging[Logging]
+            ErrorHandling[Error Handling]
+            Metrics[Prometheus Metrics]
+            RequestTracing[Request Tracing]
+        end
+    end
+    
+    EUA --> Router
+    HSPA --> Router
+    
+    Router --> AuthMiddleware --> LoggingMiddleware --> ErrorMiddleware
+    ErrorMiddleware --> SearchHandler & OnSearchHandler & SelectHandler & OnSelectHandler & InitHandler & OnInitHandler & ConfirmHandler & OnConfirmHandler & StatusHandler & OnStatusHandler & NetworkRegistryHandler
+    
+    SearchHandler --> SearchService
+    OnSearchHandler --> SearchService
+    SelectHandler & OnSelectHandler --> CatalogService
+    InitHandler & OnInitHandler --> OrderService
+    ConfirmHandler & OnConfirmHandler --> OrderService
+    StatusHandler & OnStatusHandler --> OrderService
+    NetworkRegistryHandler --> NetworkRegistryService
+    
+    SearchService --> StorageTrait & ProviderService
+    CatalogService --> StorageTrait & FulfillmentService
+    OrderService --> StorageTrait & FulfillmentService
+    FulfillmentService --> StorageTrait & ProviderService
+    ProviderService --> StorageTrait
+    NetworkRegistryService --> StorageTrait
+    
+    StorageTrait --> PostgresRepo & InMemoryRepo
+    
+    PostgresRepo --> Postgres
+    
+    Logging -.-> HTTP-Layer & Handler-Layer & Service-Layer & Repository-Layer
+    ErrorHandling -.-> HTTP-Layer & Handler-Layer & Service-Layer & Repository-Layer
+    Metrics -.-> HTTP-Layer & Handler-Layer & Service-Layer & Repository-Layer
+    RequestTracing -.-> HTTP-Layer & Handler-Layer & Service-Layer & Repository-Layer

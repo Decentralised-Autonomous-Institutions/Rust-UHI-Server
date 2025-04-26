@@ -1,0 +1,30 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+# Project Context for Rust-UHI
+
+## Overview
+This is a Rust project following official Rust API Guidelines. The project is an implementation of the Unified Health Interface (UHI) protocol in Rust.
+
+## Key Files
+- [docs/architecture.mermaid](mdc:docs/architecture.mermaid): System architecture diagram showing component relationships
+- [docs/technical.md](mdc:docs/technical.md): Technical specifications and implementation patterns
+- @docs/tasks.md: Current development tasks and requirements
+- [docs/status.md](mdc:docs/status.md): Project progress tracking
+- [Cargo.toml](mdc:Cargo.toml): Project dependencies and configuration
+- [src/main.rs](mdc:src/main.rs): Main entry point for the application
+
+## Development Workflow
+Before making changes to the codebase:
+1. Understand the system architecture from the mermaid diagram
+2. Check the current task context
+3. Review technical specifications
+4. Verify crate organization and dependencies
+
+After making changes:
+1. Verify architectural compliance
+2. Update status documentation
+3. Run `cargo clippy` and `cargo fmt` to ensure code quality
+4. Test thoroughly

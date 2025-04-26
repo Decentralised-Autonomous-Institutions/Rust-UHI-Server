@@ -1,0 +1,54 @@
+[package]
+name = "rust-uhi"
+version = "0.1.0"
+edition = "2021"
+authors = ["Airesh Bhat (nelliairesh@gmail.com)"]
+description = "Universal Health Interface (UHI) Protocol Implementation"
+readme = "README.md"
+license = "MIT"
+
+[dependencies]
+# Web framework
+actix-web = "4.4"
+actix-rt = "2.9"
+
+# Database
+sqlx = { version = "0.7", features = ["runtime-tokio-rustls", "postgres", "uuid", "time", "json", "chrono"] }
+
+# Serialization
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+
+# Async runtime
+tokio = { version = "1.35", features = ["full"] }
+
+# Logging
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter", "json"] }
+tracing-actix-web = "0.7"
+
+# Error handling
+thiserror = "1.0"
+anyhow = "1.0"
+
+# Utilities
+uuid = { version = "1.6", features = ["serde", "v4"] }
+chrono = { version = "0.4", features = ["serde"] }
+dotenv = "0.15"
+config = "0.13"
+
+# Metrics
+prometheus-client = "0.22"
+
+# Authentication
+jsonwebtoken = "9.2"
+hmac = "0.12"
+sha2 = "0.10"
+base64 = "0.21"
+
+[dev-dependencies]
+mockall = "0.12"
+test-case = "3.3"
+pretty_assertions = "1.4"
+actix-rt = "2.9"
+tokio-test = "0.4"
