@@ -13,7 +13,7 @@ The Universal Health Interface (UHI) project aims to create an open protocol for
 
 ### Completed
 - Project architecture design
-- Core data models definition
+- Core data models definition (✅ completed)
 - Basic project setup with Actix-web
 - Initial module structure and organization
 - Configuration module (✅ completed)
@@ -23,7 +23,7 @@ The Universal Health Interface (UHI) project aims to create an open protocol for
 - Basic logging setup (✅ completed)
 
 ### In Progress
-- Core UHI Gateway Server implementation (25%)
+- Core UHI Gateway Server implementation (35%)
   - HTTP routing layer (100% ✅)
   - Basic handler implementations (15% ✅)
   - Service layer implementation (20%)
@@ -31,6 +31,7 @@ The Universal Health Interface (UHI) project aims to create an open protocol for
   - Authentication/authorization middleware (0%)
   - Storage trait interfaces (80%)
   - Error handling framework (100% ✅)
+  - Data models (100% ✅)
 - Unit tests for core components (0%)
 
 ### Planned (Not Started)
@@ -57,8 +58,9 @@ We're currently implementing the core UHI Gateway Server with the following stat
 - **Storage Layer**: Defined traits, PostgreSQL implementation is basic.
 - **Error Handling**: Implemented comprehensive error handling system.
 - **Configuration**: Implemented configuration module with environment-based settings.
+- **Data Models**: Implemented all required data models based on the UHI Protocol specification.
 
-**Progress**: 25% complete
+**Progress**: 35% complete
 
 ## Technical Debt/Issues
 

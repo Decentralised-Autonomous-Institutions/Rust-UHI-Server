@@ -13,21 +13,21 @@ This document outlines the detailed tasks for implementing the Universal Health 
 - [x] Configure server parameters (host, port, workers)
 
 ### 1.2 Data Models
-- [ ] Define context model
-- [ ] Define provider model
-- [ ] Define catalog model
-- [ ] Define fulfillment model
-- [ ] Define order model
-- [ ] Define billing model
-- [ ] Define payment model
-- [ ] Define network registry models
-- [ ] Implement serialization/deserialization
+- [x] Define context model
+- [x] Define provider model
+- [x] Define catalog model
+- [x] Define fulfillment model
+- [x] Define order model
+- [x] Define billing model
+- [x] Define payment model
+- [x] Define network registry models
+- [x] Implement serialization/deserialization
 
 ### 1.3 Storage Layer
 - [ ] Define storage trait interface
-- [ ] Create database schema
-- [ ] Implement database migrations
-- [ ] Implement PostgreSQL storage
+- [ ] Create database schema* (Backlog)
+- [ ] Implement database migrations* (Backlog)
+- [ ] Implement PostgreSQL storage* (Backlog)
   - [ ] Provider operations
   - [ ] Catalog operations
   - [ ] Fulfillment operations
