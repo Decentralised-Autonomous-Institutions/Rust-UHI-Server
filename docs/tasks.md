@@ -24,19 +24,32 @@ This document outlines the detailed tasks for implementing the Universal Health 
 - [x] Implement serialization/deserialization
 
 ### 1.3 Storage Layer
-- [ ] Define storage trait interface
-- [ ] Create database schema* (Backlog)
-- [ ] Implement database migrations* (Backlog)
-- [ ] Implement PostgreSQL storage* (Backlog)
+- [x] Define storage trait interface
+- [ ] Implement in-memory storage for testing and development
+  - [x] Define in-memory data structures
+  - [x] Implement in-memory provider operations
+  - [x] Implement in-memory catalog operations
+  - [x] Implement in-memory fulfillment operations
+  - [x] Implement in-memory order operations
+  - [x] Implement in-memory network registry operations
+  - [x] Implement in-memory transaction tracking
+- [ ] Create mock data for testing with in-memory storage
+- [ ] Write unit tests for in-memory storage
+- [ ] **(Later Phase)** Create database schema
+- [ ] **(Later Phase)** Implement database migrations
+- [ ] **(Later Phase)** Implement PostgreSQL storage
   - [ ] Provider operations
   - [ ] Catalog operations
   - [ ] Fulfillment operations
   - [ ] Order operations
   - [ ] Network registry operations
   - [ ] Transaction tracking
-- [ ] Implement in-memory storage for testing
 
 ### 1.4 Service Layer
+- [ ] Design service layer with dependency injection pattern
+  - [x] Define service interfaces
+  - [x] Implement constructor-based storage injection
+  - [ ] Configure service registration in main.rs
 - [ ] Implement search service
   - [ ] Process search functionality
   - [ ] Process on_search functionality
@@ -53,6 +66,15 @@ This document outlines the detailed tasks for implementing the Universal Health 
   - [ ] Process on_confirm functionality
   - [ ] Process status functionality
   - [ ] Process on_status functionality
+- [x] Implement fulfillment service
+  - [x] Basic CRUD operations
+  - [x] Provider availability checking
+  - [x] Time slot validation
+  - [x] Integration with provider service
+- [x] Implement provider service
+  - [x] Basic CRUD operations
+  - [x] Provider availability checking
+  - [x] Working hours validation
 - [ ] Implement network registry service
   - [ ] Subscriber registration
   - [ ] Subscriber lookup
@@ -70,9 +92,15 @@ This document outlines the detailed tasks for implementing the Universal Health 
 - [ ] Implement request tracing middleware
 
 ### 1.6 Handler Layer
+- [x] Define handler interfaces
+- [ ] Update handlers to use service dependency injection
+  - [ ] Remove direct storage access from handlers
+  - [ ] Inject services via web::Data
+  - [ ] Implement proper error propagation
 - [x] Implement search handlers
   - [x] Handle search
   - [x] Handle on_search
+- [ ] Update search handlers to use the service layer
 - [ ] Implement select handlers
   - [ ] Handle select
   - [ ] Handle on_select
@@ -88,24 +116,33 @@ This document outlines the detailed tasks for implementing the Universal Health 
 - [ ] Implement network registry handlers
   - [ ] Handle lookup
 
-### 1.7 Testing
-- [ ] Unit tests
-  - [ ] Model tests
-  - [ ] Service tests
-  - [ ] Handler tests
-  - [ ] Middleware tests
-- [ ] Integration tests
-  - [ ] API tests
-  - [ ] Storage tests
-- [ ] Load tests
+### 1.7 Application Initialization
+- [ ] Implement dependency injection in main.rs
+  - [ ] Initialize storage with configuration
+  - [ ] Create services with injected storage
+  - [ ] Register services with Actix app
+  - [ ] Configure routes with services
+
+### 1.8 Testing
+- [ ] Create test fixtures and helpers
+- [ ] Unit tests for models
+- [ ] Unit tests for service layer with mock storage
+- [x] Unit tests for fulfillment service
+- [x] Unit tests for provider service
+- [ ] Unit tests for other services
+- [ ] Unit tests for handlers with mocked services
+- [ ] Integration tests for API endpoints using in-memory storage
+- [ ] **(Later Phase)** Integration tests with PostgreSQL
+- [ ] **(Later Phase)** Load tests
   - [ ] Performance testing
   - [ ] Scalability testing
 
-### 1.8 Documentation
+### 1.9 Documentation
 - [ ] API documentation
 - [ ] OpenAPI specification
 - [ ] Code documentation
 - [ ] Example requests and responses
+- [ ] Architecture documentation with dependency flow
 
 ## 2. End User Application (EUA)
 

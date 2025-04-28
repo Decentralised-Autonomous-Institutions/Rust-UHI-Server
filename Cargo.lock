@@ -1976,6 +1976,7 @@ dependencies = [
  "actix-rt",
  "actix-web",
  "anyhow",
+ "async-trait",
  "base64 0.21.7",
  "chrono",
  "config",
