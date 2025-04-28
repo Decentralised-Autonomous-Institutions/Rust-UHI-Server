@@ -18,4 +18,4 @@ pub async fn on_init(payload: web::Json<Value>) -> Result<HttpResponse> {
     Ok(HttpResponse::Ok().json(serde_json::json!({
         "message": "On_Init endpoint - Placeholder response"
     })))
-} 
+}

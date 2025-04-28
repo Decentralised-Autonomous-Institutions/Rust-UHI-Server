@@ -7,37 +7,37 @@ use uuid::Uuid;
 pub struct Context {
     /// Domain of the transaction (e.g., "nic2004:85111")
     pub domain: String,
-    
+
     /// Country where the transaction is taking place
     pub country: String,
-    
+
     /// City where the transaction is taking place
     pub city: String,
-    
+
     /// The action being performed (e.g., "search", "on_search")
     pub action: String,
-    
+
     /// Core version of the UHI protocol
     pub core_version: String,
-    
+
     /// ID of the consumer application
     pub consumer_id: String,
-    
+
     /// URI of the consumer application for callbacks
     pub consumer_uri: String,
-    
+
     /// ID of the provider application (optional for initial requests)
     pub provider_id: Option<String>,
-    
+
     /// URI of the provider application for callbacks (optional for initial requests)
     pub provider_uri: Option<String>,
-    
+
     /// Unique ID for the entire transaction flow
     pub transaction_id: String,
-    
+
     /// Unique ID for this specific message
     pub message_id: String,
-    
+
     /// Timestamp when the message was created
     pub timestamp: DateTime<Utc>,
 }
@@ -68,9 +68,14 @@ impl Context {
             timestamp: Utc::now(),
         }
     }
-    
+
     /// Create a response context from a request context
-    pub fn create_response_context(&self, action: String, provider_id: String, provider_uri: String) -> Self {
+    pub fn create_response_context(
+        &self,
+        action: String,
+        provider_id: String,
+        provider_uri: String,
+    ) -> Self {
         Self {
             domain: self.domain.clone(),
             country: self.country.clone(),
@@ -91,4 +96,4 @@ impl Context {
 /// Trait for types that can contain a context
 pub trait WithContext {
     fn context(&self) -> &Context;
-} 
+}

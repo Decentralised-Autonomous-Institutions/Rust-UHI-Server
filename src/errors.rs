@@ -1,6 +1,6 @@
 use actix_web::{HttpResponse, ResponseError};
-use thiserror::Error;
 use serde::{Deserialize, Serialize};
+use thiserror::Error;
 
 #[derive(Debug, Error)]
 pub enum AppError {
@@ -39,14 +39,28 @@ pub struct ErrorResponse {
 impl ResponseError for AppError {
     fn error_response(&self) -> HttpResponse {
         let (status_code, error_code) = match self {
-            AppError::ValidationError(_) => (actix_web::http::StatusCode::BAD_REQUEST, "INVALID_INPUT"),
+            AppError::ValidationError(_) => {
+                (actix_web::http::StatusCode::BAD_REQUEST, "INVALID_INPUT")
+            }
             AppError::NotFoundError(_) => (actix_web::http::StatusCode::NOT_FOUND, "NOT_FOUND"),
             AppError::AuthError(_) => (actix_web::http::StatusCode::UNAUTHORIZED, "UNAUTHORIZED"),
             AppError::ForbiddenError(_) => (actix_web::http::StatusCode::FORBIDDEN, "FORBIDDEN"),
-            AppError::DatabaseError(_) => (actix_web::http::StatusCode::INTERNAL_SERVER_ERROR, "DATABASE_ERROR"),
-            AppError::ConfigError(_) => (actix_web::http::StatusCode::INTERNAL_SERVER_ERROR, "CONFIG_ERROR"),
-            AppError::InternalError(_) => (actix_web::http::StatusCode::INTERNAL_SERVER_ERROR, "INTERNAL_ERROR"),
-            AppError::ExternalServiceError(_) => (actix_web::http::StatusCode::BAD_GATEWAY, "EXTERNAL_SERVICE_ERROR"),
+            AppError::DatabaseError(_) => (
+                actix_web::http::StatusCode::INTERNAL_SERVER_ERROR,
+                "DATABASE_ERROR",
+            ),
+            AppError::ConfigError(_) => (
+                actix_web::http::StatusCode::INTERNAL_SERVER_ERROR,
+                "CONFIG_ERROR",
+            ),
+            AppError::InternalError(_) => (
+                actix_web::http::StatusCode::INTERNAL_SERVER_ERROR,
+                "INTERNAL_ERROR",
+            ),
+            AppError::ExternalServiceError(_) => (
+                actix_web::http::StatusCode::BAD_GATEWAY,
+                "EXTERNAL_SERVICE_ERROR",
+            ),
         };
 
         let error_response = ErrorResponse {
@@ -57,4 +71,4 @@ impl ResponseError for AppError {
 
         HttpResponse::build(status_code).json(error_response)
     }
-} 
+}

@@ -1,5 +1,5 @@
 use super::*;
-use crate::models::provider::{Provider, Descriptor, Category};
+use crate::models::provider::{Category, Descriptor, Provider};
 use chrono::Utc;
 use std::collections::HashMap;
 use uuid::Uuid;
@@ -13,19 +13,17 @@ fn create_test_provider() -> Provider {
             long_desc: Some("Long description of the provider".to_string()),
             images: Some(vec!["http://example.com/image.jpg".to_string()]),
         },
-        categories: vec![
-            Category {
-                id: "cat1".to_string(),
-                descriptor: Descriptor {
-                    name: "Cardiology".to_string(),
-                    short_desc: Some("Heart related services".to_string()),
-                    long_desc: None,
-                    images: None,
-                },
-                time: Some(Utc::now()),
-                tags: Some(HashMap::new()),
-            }
-        ],
+        categories: vec![Category {
+            id: "cat1".to_string(),
+            descriptor: Descriptor {
+                name: "Cardiology".to_string(),
+                short_desc: Some("Heart related services".to_string()),
+                long_desc: None,
+                images: None,
+            },
+            time: Some(Utc::now()),
+            tags: Some(HashMap::new()),
+        }],
         created_at: Utc::now(),
         updated_at: Utc::now(),
     }

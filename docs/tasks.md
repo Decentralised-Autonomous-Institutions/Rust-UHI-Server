@@ -52,20 +52,21 @@ This document outlines the detailed tasks for implementing the Unified Health In
   - [ ] Configure service registration in main.rs
 - [ ] Implement search service
   - [x] Define service interface
-  - [ ] Implement search functionality
-  - [ ] Implement on_search functionality
-  - [ ] Implement provider lookup
-  - [ ] Implement search criteria matching
+  - [x] Implement search functionality
+  - [x] Implement transaction tracking
+  - [x] Implement provider lookup
+  - [x] Implement result aggregation and merging
+  - [ ] Implement advanced search criteria matching
   - [ ] Implement result filtering and sorting
 - [ ] Implement catalog service
-  - [x] Define service interface
+  - [ ] Define service interface
   - [ ] Implement catalog management
   - [ ] Implement select functionality
   - [ ] Implement on_select functionality
   - [ ] Implement pricing and quotation
   - [ ] Implement item availability checking
 - [ ] Implement order service
-  - [x] Define service interface
+  - [ ] Define service interface
   - [ ] Implement order creation
   - [ ] Implement init functionality
   - [ ] Implement on_init functionality
@@ -74,25 +75,25 @@ This document outlines the detailed tasks for implementing the Unified Health In
   - [ ] Implement status functionality
   - [ ] Implement on_status functionality
   - [ ] Implement order state transitions
-- [x] Implement fulfillment service
-  - [x] Define service interface
-  - [x] Implement basic CRUD operations
-  - [x] Implement provider availability checking
-  - [x] Implement time slot validation
-  - [x] Implement state transitions
-  - [x] Implement buffer management
+- [ ] Implement fulfillment service
+  - [ ] Define service interface
+  - [ ] Implement basic CRUD operations
+  - [ ] Implement provider availability checking
+  - [ ] Implement time slot validation
+  - [ ] Implement state transitions
+  - [ ] Implement buffer management
   - [ ] Implement recurring appointment handling
-- [x] Implement provider service
-  - [x] Define service interface
-  - [x] Implement basic CRUD operations
-  - [x] Implement provider availability checking
-  - [x] Implement working hours validation
-  - [x] Implement specialty-based search
+- [ ] Implement provider service
+  - [ ] Define service interface
+  - [ ] Implement basic CRUD operations
+  - [ ] Implement provider availability checking
+  - [ ] Implement working hours validation
+  - [ ] Implement specialty-based search
   - [ ] Implement location-based search
   - [ ] Implement credential validation
 - [ ] Implement network registry service
-  - [x] Define service interface
-  - [x] Implement subscriber registration
+  - [ ] Define service interface
+  - [ ] Implement subscriber registration
   - [ ] Implement subscriber lookup
   - [ ] Implement signature validation
   - [ ] Implement domain verification
@@ -100,7 +101,7 @@ This document outlines the detailed tasks for implementing the Unified Health In
 
 ### 1.5 Service Integration
 - [ ] Implement service interaction patterns
-  - [x] Define service dependencies
+  - [ ] Define service dependencies
   - [ ] Implement FulfillmentService integration with ProviderService
   - [ ] Implement CatalogService integration with FulfillmentService
   - [ ] Implement OrderService integration with CatalogService

@@ -1,11 +1,13 @@
-use tracing_subscriber::{layer::SubscriberExt, util::SubscriberInitExt, EnvFilter, fmt};
 use crate::config::LoggingConfig;
+use tracing_subscriber::{fmt, layer::SubscriberExt, util::SubscriberInitExt, EnvFilter};
 
 pub fn init_logging(config: &LoggingConfig) {
-    let env_filter = EnvFilter::try_from_default_env()
-        .unwrap_or_else(|_| {
-            EnvFilter::new(format!("rust_uhi={},actix_web=info,sqlx=warn", config.level))
-        });
+    let env_filter = EnvFilter::try_from_default_env().unwrap_or_else(|_| {
+        EnvFilter::new(format!(
+            "rust_uhi={},actix_web=info,sqlx=warn",
+            config.level
+        ))
+    });
 
     match config.format.as_str() {
         "json" => {
@@ -13,7 +15,7 @@ pub fn init_logging(config: &LoggingConfig) {
                 .with(env_filter)
                 .with(fmt::layer().json())
                 .init();
-        },
+        }
         _ => {
             tracing_subscriber::registry()
                 .with(env_filter)
@@ -41,4 +43,4 @@ pub fn log_error<E: std::fmt::Display>(error: &E, context: &str) {
         context = %context,
         "An error occurred"
     );
-} 
+}

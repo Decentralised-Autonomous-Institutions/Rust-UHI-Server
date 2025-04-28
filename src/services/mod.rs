@@ -1,15 +1,15 @@
-pub mod search;
 pub mod catalog;
-pub mod order;
-pub mod fulfillment;
-pub mod provider;
-pub mod network_registry;
 pub mod error;
+pub mod fulfillment;
+pub mod network_registry;
+pub mod order;
+pub mod provider;
+pub mod search;
 
-pub use search::SearchService;
 pub use catalog::CatalogService;
-pub use order::OrderService;
+pub use error::ServiceError;
 pub use fulfillment::FulfillmentService;
-pub use provider::ProviderService;
 pub use network_registry::NetworkRegistryService;
-pub use error::ServiceError; 
+pub use order::OrderService;
+pub use provider::ProviderService;
+pub use search::SearchService;

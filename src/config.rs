@@ -1,6 +1,6 @@
-use std::env;
 use config::{Config, ConfigError, Environment, File};
 use serde::Deserialize;
+use std::env;
 
 #[derive(Debug, Deserialize, Clone)]
 pub struct ServerConfig {
@@ -47,4 +47,4 @@ impl AppConfig {
 
         config.try_deserialize()
     }
-} 
+}

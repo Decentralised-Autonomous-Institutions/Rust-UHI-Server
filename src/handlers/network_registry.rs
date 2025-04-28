@@ -9,4 +9,4 @@ pub async fn lookup(payload: web::Json<Value>) -> Result<HttpResponse> {
     Ok(HttpResponse::Ok().json(serde_json::json!({
         "message": "Network Registry Lookup endpoint - Placeholder response"
     })))
-} 
+}

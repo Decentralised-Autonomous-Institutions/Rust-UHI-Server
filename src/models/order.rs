@@ -1,19 +1,19 @@
-use chrono::{DateTime, Utc};
-use serde::{Deserialize, Serialize};
+use crate::models::billing::Billing;
 use crate::models::catalog::{Item, Quotation};
 use crate::models::fulfillment::Fulfillment;
-use crate::models::billing::Billing;
 use crate::models::payment::Payment;
+use chrono::{DateTime, Utc};
+use serde::{Deserialize, Serialize};
 
 /// Summary of a provider for order references
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct ProviderSummary {
     /// ID of the provider
     pub id: String,
-    
+
     /// Descriptive name of the provider
     pub descriptor: String,
-    
+
     /// Categories the provider belongs to
     pub categories: Vec<String>,
 }
@@ -23,10 +23,10 @@ pub struct ProviderSummary {
 pub struct OrderItem {
     /// ID of the item
     pub id: String,
-    
+
     /// Quantity ordered
     pub quantity: i32,
-    
+
     /// Full catalog item details
     pub item: Item,
 }
@@ -36,7 +36,7 @@ pub struct OrderItem {
 pub struct OrderStatus {
     /// Current state of the order
     pub state: String,
-    
+
     /// Timestamp when status was updated
     pub updated_at: DateTime<Utc>,
 }
@@ -46,31 +46,31 @@ pub struct OrderStatus {
 pub struct Order {
     /// Unique ID for the order
     pub id: String,
-    
+
     /// Provider summary
     pub provider: ProviderSummary,
-    
+
     /// List of ordered items
     pub items: Vec<OrderItem>,
-    
+
     /// Billing information
     pub billing: Billing,
-    
+
     /// Fulfillment details
     pub fulfillment: Fulfillment,
-    
+
     /// Price quotation
     pub quote: Option<Quotation>,
-    
+
     /// Payment details
     pub payment: Option<Payment>,
-    
+
     /// Current state of the order
     pub state: String,
-    
+
     /// Time when the order was created
     pub created_at: DateTime<Utc>,
-    
+
     /// Time when the order was last updated
     pub updated_at: DateTime<Utc>,
 }
@@ -80,10 +80,10 @@ pub struct Order {
 pub struct OrderInitRequest {
     /// List of items to order
     pub items: Vec<OrderItem>,
-    
+
     /// Billing information
     pub billing: Billing,
-    
+
     /// Fulfillment details
     pub fulfillment: Fulfillment,
 }
@@ -100,7 +100,7 @@ pub struct OrderInitResponse {
 pub struct OrderConfirmRequest {
     /// Order ID to confirm
     pub order_id: String,
-    
+
     /// Payment details
     pub payment: Payment,
 }
@@ -124,4 +124,4 @@ pub struct OrderStatusRequest {
 pub struct OrderStatusResponse {
     /// Order status details
     pub order: Order,
-} 
+}

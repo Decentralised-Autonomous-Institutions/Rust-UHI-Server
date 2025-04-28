@@ -6,19 +6,19 @@ use std::fmt;
 pub enum ServiceError {
     /// Error from the storage layer
     Storage(StorageError),
-    
+
     /// Resource not found
     NotFound(String),
-    
+
     /// Validation error
     Validation(String),
-    
+
     /// Business logic error
     BusinessLogic(String),
-    
+
     /// External service error
     ExternalService(String),
-    
+
     /// Generic error
     Internal(String),
 }
@@ -59,4 +59,4 @@ impl From<Box<dyn std::error::Error>> for ServiceError {
     fn from(err: Box<dyn std::error::Error>) -> Self {
         ServiceError::Internal(err.to_string())
     }
-} 
+}

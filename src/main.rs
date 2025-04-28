@@ -7,39 +7,39 @@ mod routes;
 mod services;
 mod storage;
 
-use actix_web::{App, HttpServer, middleware, web};
+use actix_web::{middleware, web, App, HttpServer};
 use dotenv::dotenv;
 use tracing_actix_web::TracingLogger;
 
 use crate::config::AppConfig;
 use crate::routes::configure_routes;
-use crate::storage::memory::MemoryStorage;
 use crate::services::{
+    CatalogService, FulfillmentService, NetworkRegistryService, OrderService, ProviderService,
     SearchService,
-    CatalogService,
-    OrderService,
-    FulfillmentService,
-    ProviderService,
-    NetworkRegistryService,
 };
+use crate::storage::memory::MemoryStorage;
 use std::sync::Arc;
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
     // Load environment variables from .env file if it exists
     dotenv().ok();
-    
+
     // Load configuration
     let config = AppConfig::new().expect("Failed to load configuration");
-    
+
     // Initialize logging
     logging::init_logging(&config.logging);
-    
-    tracing::info!("Starting UHI Gateway server on {}:{}", config.server.host, config.server.port);
-    
+
+    tracing::info!(
+        "Starting UHI Gateway server on {}:{}",
+        config.server.host,
+        config.server.port
+    );
+
     // Initialize storage (wrapped in Arc for thread-safe reference counting)
     let storage = Arc::new(MemoryStorage::new());
-    
+
     // Initialize services with storage dependency
     let search_service = web::Data::new(SearchService::new(storage.clone()));
     let catalog_service = web::Data::new(CatalogService::new(storage.clone()));
@@ -47,12 +47,12 @@ async fn main() -> std::io::Result<()> {
     let fulfillment_service = web::Data::new(FulfillmentService::new(storage.clone()));
     let provider_service = web::Data::new(ProviderService::new(storage.clone()));
     let network_registry_service = web::Data::new(NetworkRegistryService::new(storage.clone()));
-    
+
     // Store config values for the HTTP server
     let server_host = config.server.host.clone();
     let server_port = config.server.port;
     let server_workers = config.server.workers;
-    
+
     // Create and start the HTTP server
     HttpServer::new(move || {
         App::new()

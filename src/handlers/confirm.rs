@@ -18,4 +18,4 @@ pub async fn on_confirm(payload: web::Json<Value>) -> Result<HttpResponse> {
     Ok(HttpResponse::Ok().json(serde_json::json!({
         "message": "On_Confirm endpoint - Placeholder response"
     })))
-} 
+}

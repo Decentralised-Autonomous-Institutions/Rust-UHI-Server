@@ -8,11 +8,11 @@ pub enum ParticipantType {
     /// End User Application
     #[serde(rename = "EUA")]
     Eua,
-    
+
     /// Health Service Provider
     #[serde(rename = "HSP")]
     Hsp,
-    
+
     /// Gateway
     #[serde(rename = "GATEWAY")]
     Gateway,
@@ -24,11 +24,11 @@ pub enum ParticipantStatus {
     /// Participant is active
     #[serde(rename = "ACTIVE")]
     Active,
-    
+
     /// Participant is inactive
     #[serde(rename = "INACTIVE")]
     Inactive,
-    
+
     /// Participant is suspended
     #[serde(rename = "SUSPENDED")]
     Suspended,
@@ -39,31 +39,31 @@ pub enum ParticipantStatus {
 pub struct Subscriber {
     /// Unique ID for the subscriber
     pub id: String,
-    
+
     /// Type of subscriber (EUA, HSP, GATEWAY)
     pub type_field: String,
-    
+
     /// Domain of operation
     pub domain: String,
-    
+
     /// City of operation
     pub city: Option<String>,
-    
+
     /// Country of operation
     pub country: Option<String>,
-    
+
     /// Base URL for the subscriber
     pub url: String,
-    
+
     /// Status of the subscriber
     pub status: String,
-    
+
     /// Public key for signature verification
     pub public_key: String,
-    
+
     /// Time when the subscriber was created
     pub created_at: DateTime<Utc>,
-    
+
     /// Time when the subscriber was last updated
     pub updated_at: DateTime<Utc>,
 }
@@ -73,13 +73,13 @@ pub struct Subscriber {
 pub struct NetworkRegistryLookup {
     /// Type of subscriber to look up
     pub type_field: String,
-    
+
     /// Domain to look up
     pub domain: String,
-    
+
     /// City to filter by (optional)
     pub city: Option<String>,
-    
+
     /// Country to filter by (optional)
     pub country: Option<String>,
 }
@@ -89,31 +89,31 @@ pub struct NetworkRegistryLookup {
 pub struct Participant {
     /// Unique subscriber ID
     pub subscriber_id: String,
-    
+
     /// Type of participant
     pub participant_type: String,
-    
+
     /// Domains supported by the participant
     pub domains: Vec<String>,
-    
+
     /// Participant base URL for callbacks
     pub url: String,
-    
+
     /// Participant status
     pub status: String,
-    
+
     /// Public key for signature verification
     pub public_key: String,
-    
+
     /// Time when the participant was registered
     pub created_at: DateTime<Utc>,
-    
+
     /// Time when the participant was last updated
     pub updated_at: DateTime<Utc>,
-    
+
     /// Certificate details
     pub certificate: Option<String>,
-    
+
     /// Additional metadata
     pub metadata: Option<HashMap<String, String>>,
 }
@@ -123,10 +123,10 @@ pub struct Participant {
 pub struct LookupRequest {
     /// Subscriber ID to look up
     pub subscriber_id: Option<String>,
-    
+
     /// Domain to filter by
     pub domain: Option<String>,
-    
+
     /// Participant type to filter by
     pub participant_type: Option<String>,
 }
@@ -143,19 +143,19 @@ pub struct LookupResponse {
 pub struct RegistrationRequest {
     /// Participant type being registered
     pub participant_type: String,
-    
+
     /// Domains supported by the participant
     pub domains: Vec<String>,
-    
+
     /// Participant base URL for callbacks
     pub url: String,
-    
+
     /// Public key for signature verification
     pub public_key: String,
-    
+
     /// Certificate details
     pub certificate: Option<String>,
-    
+
     /// Additional metadata
     pub metadata: Option<HashMap<String, String>>,
 }
@@ -165,7 +165,7 @@ pub struct RegistrationRequest {
 pub struct RegistrationResponse {
     /// Assigned subscriber ID
     pub subscriber_id: String,
-    
+
     /// Registration status
     pub status: String,
 }
@@ -175,10 +175,10 @@ pub struct RegistrationResponse {
 pub struct Subscription {
     /// Subscriber ID
     pub subscriber_id: String,
-    
+
     /// URL for receiving notifications
     pub url: String,
-    
+
     /// Type of events to subscribe to
     pub events: Vec<String>,
-} 
+}
