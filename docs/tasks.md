@@ -46,90 +46,137 @@ This document outlines the detailed tasks for implementing the Unified Health In
   - [ ] Transaction tracking
 
 ### 1.4 Service Layer
-- [ ] Design service layer with dependency injection pattern
+- [x] Design service layer with dependency injection pattern
   - [x] Define service interfaces
   - [x] Implement constructor-based storage injection
   - [ ] Configure service registration in main.rs
 - [ ] Implement search service
-  - [ ] Process search functionality
-  - [ ] Process on_search functionality
-  - [ ] Provider lookup
-  - [ ] Request forwarding
+  - [x] Define service interface
+  - [ ] Implement search functionality
+  - [ ] Implement on_search functionality
+  - [ ] Implement provider lookup
+  - [ ] Implement search criteria matching
+  - [ ] Implement result filtering and sorting
 - [ ] Implement catalog service
-  - [ ] Process select functionality
-  - [ ] Process on_select functionality
-  - [ ] Pricing and quotation
+  - [x] Define service interface
+  - [ ] Implement catalog management
+  - [ ] Implement select functionality
+  - [ ] Implement on_select functionality
+  - [ ] Implement pricing and quotation
+  - [ ] Implement item availability checking
 - [ ] Implement order service
-  - [ ] Process init functionality
-  - [ ] Process on_init functionality
-  - [ ] Process confirm functionality
-  - [ ] Process on_confirm functionality
-  - [ ] Process status functionality
-  - [ ] Process on_status functionality
+  - [x] Define service interface
+  - [ ] Implement order creation
+  - [ ] Implement init functionality
+  - [ ] Implement on_init functionality
+  - [ ] Implement confirm functionality
+  - [ ] Implement on_confirm functionality
+  - [ ] Implement status functionality
+  - [ ] Implement on_status functionality
+  - [ ] Implement order state transitions
 - [x] Implement fulfillment service
-  - [x] Basic CRUD operations
-  - [x] Provider availability checking
-  - [x] Time slot validation
-  - [x] Integration with provider service
+  - [x] Define service interface
+  - [x] Implement basic CRUD operations
+  - [x] Implement provider availability checking
+  - [x] Implement time slot validation
+  - [x] Implement state transitions
+  - [x] Implement buffer management
+  - [ ] Implement recurring appointment handling
 - [x] Implement provider service
-  - [x] Basic CRUD operations
-  - [x] Provider availability checking
-  - [x] Working hours validation
+  - [x] Define service interface
+  - [x] Implement basic CRUD operations
+  - [x] Implement provider availability checking
+  - [x] Implement working hours validation
+  - [x] Implement specialty-based search
+  - [ ] Implement location-based search
+  - [ ] Implement credential validation
 - [ ] Implement network registry service
-  - [ ] Subscriber registration
-  - [ ] Subscriber lookup
-  - [ ] Domain validation
+  - [x] Define service interface
+  - [x] Implement subscriber registration
+  - [ ] Implement subscriber lookup
+  - [ ] Implement signature validation
+  - [ ] Implement domain verification
+  - [ ] Implement certificate management
 
-### 1.5 HTTP Layer
+### 1.5 Service Integration
+- [ ] Implement service interaction patterns
+  - [x] Define service dependencies
+  - [ ] Implement FulfillmentService integration with ProviderService
+  - [ ] Implement CatalogService integration with FulfillmentService
+  - [ ] Implement OrderService integration with CatalogService
+  - [ ] Implement OrderService integration with FulfillmentService
+  - [ ] Implement SearchService integration with ProviderService
+- [ ] Implement end-to-end flows
+  - [ ] Implement search flow
+  - [ ] Implement selection flow
+  - [ ] Implement order initialization flow
+  - [ ] Implement order confirmation flow
+  - [ ] Implement status checking flow
+
+### 1.6 HTTP Layer
 - [x] Define API routes
 - [x] Set up middleware pipeline
 - [ ] Implement authentication middleware
   - [ ] Parse X-Gateway-Authorization header
   - [ ] Verify signatures
   - [ ] Validate subscriber information
-- [ ] Implement error handling middleware
-- [ ] Implement request logging middleware
+- [x] Implement error handling middleware
+- [x] Implement request logging middleware
 - [ ] Implement request tracing middleware
 
-### 1.6 Handler Layer
+### 1.7 Handler Layer
 - [x] Define handler interfaces
 - [ ] Update handlers to use service dependency injection
   - [ ] Remove direct storage access from handlers
   - [ ] Inject services via web::Data
   - [ ] Implement proper error propagation
-- [x] Implement search handlers
-  - [x] Handle search
-  - [x] Handle on_search
-- [ ] Update search handlers to use the service layer
+- [ ] Implement search handlers
+  - [x] Define handler interface
+  - [ ] Implement search handler
+  - [ ] Implement on_search handler
+  - [ ] Integrate with SearchService
 - [ ] Implement select handlers
-  - [ ] Handle select
-  - [ ] Handle on_select
+  - [x] Define handler interface
+  - [ ] Implement select handler
+  - [ ] Implement on_select handler
+  - [ ] Integrate with CatalogService
 - [ ] Implement init handlers
-  - [ ] Handle init
-  - [ ] Handle on_init
+  - [x] Define handler interface
+  - [ ] Implement init handler
+  - [ ] Implement on_init handler
+  - [ ] Integrate with OrderService
 - [ ] Implement confirm handlers
-  - [ ] Handle confirm
-  - [ ] Handle on_confirm
+  - [x] Define handler interface
+  - [ ] Implement confirm handler
+  - [ ] Implement on_confirm handler
+  - [ ] Integrate with OrderService
 - [ ] Implement status handlers
-  - [ ] Handle status
-  - [ ] Handle on_status
+  - [x] Define handler interface
+  - [ ] Implement status handler
+  - [ ] Implement on_status handler
+  - [ ] Integrate with OrderService
 - [ ] Implement network registry handlers
-  - [ ] Handle lookup
+  - [x] Define handler interface
+  - [ ] Implement lookup handler
+  - [ ] Integrate with NetworkRegistryService
 
-### 1.7 Application Initialization
+### 1.8 Application Initialization
 - [ ] Implement dependency injection in main.rs
   - [ ] Initialize storage with configuration
   - [ ] Create services with injected storage
   - [ ] Register services with Actix app
   - [ ] Configure routes with services
 
-### 1.8 Testing
+### 1.9 Testing
 - [ ] Create test fixtures and helpers
-- [ ] Unit tests for models
+- [x] Unit tests for models
 - [ ] Unit tests for service layer with mock storage
-- [x] Unit tests for fulfillment service
-- [x] Unit tests for provider service
-- [ ] Unit tests for other services
+  - [x] Unit tests for fulfillment service
+  - [x] Unit tests for provider service
+  - [ ] Unit tests for search service
+  - [ ] Unit tests for catalog service
+  - [ ] Unit tests for order service
+  - [ ] Unit tests for network registry service
 - [ ] Unit tests for handlers with mocked services
 - [ ] Integration tests for API endpoints using in-memory storage
 - [ ] **(Later Phase)** Integration tests with PostgreSQL
@@ -137,14 +184,21 @@ This document outlines the detailed tasks for implementing the Unified Health In
   - [ ] Performance testing
   - [ ] Scalability testing
 
-### 1.9 Documentation
+### 1.10 Documentation
 - [ ] API documentation
 - [ ] OpenAPI specification
-- [ ] Code documentation
+- [x] Code documentation
 - [ ] Example requests and responses
-- [ ] Architecture documentation with dependency flow
+- [x] Architecture documentation with dependency flow
+- [ ] Service layer documentation
+  - [x] FulfillmentService documentation
+  - [x] ProviderService documentation
+  - [x] SearchService documentation
+  - [x] CatalogService documentation
+  - [x] OrderService documentation
+  - [x] NetworkRegistryService documentation
 
-## 2. End User Application (EUA)
+## 2. End User Application (EUA) (Future Phase)
 
 ### 2.1 Frontend Framework Setup
 - [ ] Initialize frontend project
@@ -185,7 +239,7 @@ This document outlines the detailed tasks for implementing the Unified Health In
 - [ ] Accessibility testing
 - [ ] Performance optimization
 
-## 3. Health Service Provider Application (HSPA)
+## 3. Health Service Provider Application (HSPA) (Future Phase)
 
 ### 3.1 Provider Dashboard
 - [ ] Initialize provider dashboard project
@@ -218,17 +272,13 @@ This document outlines the detailed tasks for implementing the Unified Health In
 - [ ] E2E tests
 - [ ] Performance optimization
 
-## 4. Connectors
+## 4. Connectors (Future Phase)
 
 ### 4.1 Electronic Health Record (EHR) Connector
 - [ ] Define integration interface
 - [ ] Implement data transformation
 - [ ] Implement authentication with EHR systems
 - [ ] Create adapters for popular EHR systems
-  - [ ] Epic
-  - [ ] Cerner
-  - [ ] Allscripts
-  - [ ] Custom solutions
 
 ### 4.2 Hospital Information System (HIS) Connector
 - [ ] Define integration interface
@@ -248,22 +298,13 @@ This document outlines the detailed tasks for implementing the Unified Health In
 - [ ] Implement claim submission
 - [ ] Implement payment processing
 
-### 4.5 Testing and Certification
-- [ ] Unit tests for connectors
-- [ ] Integration tests with actual systems
-- [ ] Certification process for connectors
-- [ ] Documentation for integration
-
-## 5. Blockchain Certification Layer
+## 5. Blockchain Certification Layer (Future Phase)
 
 ### 5.1 Blockchain Infrastructure
 - [ ] Select appropriate blockchain platform
 - [ ] Set up blockchain nodes
 - [ ] Configure consensus mechanism
 - [ ] Implement smart contracts
-  - [ ] Record certification
-  - [ ] Access control
-  - [ ] Audit trail
 
 ### 5.2 Record Certification
 - [ ] Implement hashing of health records
@@ -271,25 +312,7 @@ This document outlines the detailed tasks for implementing the Unified Health In
 - [ ] Implement certificate generation
 - [ ] Implement certificate verification
 
-### 5.3 Identity Management
-- [ ] Implement decentralized identifiers (DIDs)
-- [ ] Implement verifiable credentials
-- [ ] Implement key management
-- [ ] Implement authorization
-
-### 5.4 Integration with UHI
-- [ ] Implement API for UHI server
-- [ ] Implement blockchain client
-- [ ] Implement verification in EUA
-- [ ] Implement certification in HSPA
-
-### 5.5 Testing and Security
-- [ ] Unit tests for smart contracts
-- [ ] Security auditing
-- [ ] Penetration testing
-- [ ] Performance testing
-
-## 6. Deployment and DevOps
+## 6. Deployment and DevOps (Future Phase)
 
 ### 6.1 Infrastructure Setup
 - [ ] Set up development environment
@@ -309,37 +332,31 @@ This document outlines the detailed tasks for implementing the Unified Health In
 - [ ] Set up Kubernetes deployment
 - [ ] Configure auto-scaling
 
-### 6.4 Monitoring and Maintenance
-- [ ] Set up logging aggregation
-- [ ] Configure metrics collection
-- [ ] Set up alerting
-- [ ] Create backup and recovery procedures
+## Priority Tasks for Next Sprint
 
-## 7. Compliance and Documentation
+1. **Complete Service Layer Implementation**
+   - Finish SearchService implementation
+   - Advance CatalogService implementation
+   - Progress on OrderService implementation
+   - Complete NetworkRegistryService implementation
 
-### 7.1 Regulatory Compliance
-- [ ] Identify applicable regulations
-  - [ ] HIPAA
-  - [ ] GDPR
-  - [ ] Local healthcare regulations
-- [ ] Implement compliance measures
-- [ ] Create compliance documentation
-- [ ] Conduct compliance audit
+2. **Handler Integration**
+   - Update all handlers to use service layer
+   - Remove direct storage access from handlers
+   - Implement proper error handling in handlers
 
-### 7.2 User Documentation
-- [ ] Create user manuals
-- [ ] Create administrator guides
-- [ ] Create integration guides
-- [ ] Create API documentation
+3. **Service Integration**
+   - Implement service interactions for key flows
+   - Complete FulfillmentService integration with ProviderService
+   - Integrate CatalogService with FulfillmentService
+   - Integrate OrderService with other services
 
-### 7.3 Training Materials
-- [ ] Create training modules for EUA users
-- [ ] Create training modules for HSPA users
-- [ ] Create training for system administrators
-- [ ] Create training for developers
+4. **Testing**
+   - Add unit tests for all services
+   - Implement integration tests for key flows
+   - Create mock data for testing scenarios
 
-### 7.4 Project Documentation
-- [ ] Create architecture documentation
-- [ ] Create technical specifications
-- [ ] Create maintenance procedures
-- [ ] Create deployment guides
+5. **Documentation**
+   - Update API documentation
+   - Create example requests and responses
+   - Document service interactions

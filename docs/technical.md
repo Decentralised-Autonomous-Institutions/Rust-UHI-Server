@@ -20,7 +20,7 @@ This document outlines the technical architecture for the Unified Health Interfa
 
 The system is designed as a layered architecture with the following components:
 
-### 1. HTTP Layer (`src/main.rs`, `src/routes.rs`)
+### 1. HTTP Layer (`src/routes.rs`, `src/handlers/`)
 
 The HTTP layer is implemented using Actix-web and handles all incoming HTTP requests. Key components:
 
@@ -33,56 +33,14 @@ The HTTP layer is implemented using Actix-web and handles all incoming HTTP requ
   * Request tracing
 
 UHI Gateway API endpoints include:
-- `/api/v1/search` - Search for healthcare services
-- `/api/v1/on_search` - Receive healthcare service catalog
-- `/api/v1/select` - Select healthcare services
-- `/api/v1/on_select` - Receive price quotation
-- `/api/v1/init` - Initialize order
-- `/api/v1/on_init` - Receive order with payment details
-- `/api/v1/confirm` - Confirm order
-- `/api/v1/on_confirm` - Receive confirmed order
-- `/api/v1/status` - Check order status
-- `/api/v1/on_status` - Receive order status
-- `/api/v1/networkregistry/lookup` - Lookup network participants
+- `/api/v1/search` & `/api/v1/on_search` - Discovery of healthcare services
+- `/api/v1/select` & `/api/v1/on_select` - Selection of specific services
+- `/api/v1/init` & `/api/v1/on_init` - Initialization of service booking
+- `/api/v1/confirm` & `/api/v1/on_confirm` - Confirmation of service booking
+- `/api/v1/status` & `/api/v1/on_status` - Status checking of booked services
+- `/api/v1/networkregistry/lookup` - Network registry for provider discovery
 
-### 2. Service Layer (`src/services/`)
-
-The service layer contains business logic and orchestrates data operations. Services act as intermediaries between handlers and storage, providing a clean separation of concerns:
-
-* **Search Service**: Orchestrates healthcare service discovery
-* **Catalog Service**: Manages healthcare service catalogs
-* **Order Service**: Manages healthcare service bookings
-* **Fulfillment Service**: Manages service delivery
-* **Provider Service**: Manages healthcare service providers
-* **Network Registry Service**: Manages network participant registry
-
-Each service:
-- Receives a storage implementation via constructor (dependency injection)
-- Implements domain-specific business logic
-- Communicates with the storage layer through traits
-- Handles proper error propagation
-- Ensures data consistency
-
-Example service implementation:
-
-```rust
-pub struct SearchService {
-    storage: Arc<dyn Storage>,
-}
-
-impl SearchService {
-    pub fn new(storage: Arc<dyn Storage>) -> Self {
-        Self { storage }
-    }
-    
-    pub async fn search(&self, request: SearchRequest) -> Result<SearchResponse, ServiceError> {
-        // Business logic
-        // Storage access via self.storage
-    }
-}
-```
-
-### 3. Handler Layer (`src/handlers/`)
+### 2. Handler Layer (`src/handlers/`)
 
 The handler layer processes HTTP requests and delegates to the service layer. Handlers never access storage directly:
 
@@ -116,6 +74,226 @@ pub async fn search(
 }
 ```
 
+### 3. Service Layer (`src/services/`)
+
+The service layer contains the business logic and orchestrates data operations. Services act as intermediaries between handlers and storage, providing a clean separation of concerns. Each service is designed for a specific domain responsibility:
+
+#### SearchService
+
+Handles the discovery of healthcare services through search functionality:
+- Processes search requests from End User Applications (EUAs)
+- Forwards search requests to Health Service Provider Applications (HSPAs)
+- Aggregates and filters search results
+- Manages stateful search sessions
+
+```rust
+pub struct SearchService {
+    storage: Arc<dyn Storage>,
+}
+
+impl SearchService {
+    pub fn new(storage: Arc<dyn Storage>) -> Self {
+        Self { storage }
+    }
+    
+    pub async fn search(&self, request: SearchRequest) -> Result<SearchResponse, ServiceError> {
+        // Search logic implementation
+    }
+    
+    pub async fn on_search(&self, response: SearchResponse) -> Result<(), ServiceError> {
+        // On_search callback handling
+    }
+}
+```
+
+#### CatalogService
+
+Manages healthcare service catalogs and selection:
+- Creates and updates provider catalogs
+- Processes selection of services by patients
+- Generates price quotations
+- Validates service selection against availability
+
+```rust
+pub struct CatalogService {
+    storage: Arc<dyn Storage>,
+}
+
+impl CatalogService {
+    pub fn new(storage: Arc<dyn Storage>) -> Self {
+        Self { storage }
+    }
+    
+    pub async fn create_catalog(&self, provider_id: &str, catalog: Catalog) 
+        -> Result<Catalog, ServiceError> {
+        // Catalog creation logic
+    }
+    
+    pub async fn select(&self, provider_id: &str, items: Vec<String>) 
+        -> Result<Vec<Item>, ServiceError> {
+        // Item selection logic
+    }
+    
+    pub async fn on_select(&self, provider_id: &str, items: Vec<Item>) 
+        -> Result<Quotation, ServiceError> {
+        // Quotation generation logic
+    }
+}
+```
+
+#### OrderService
+
+Manages the lifecycle of healthcare service bookings:
+- Processes order initialization
+- Handles order confirmation
+- Tracks order status
+- Coordinates with FulfillmentService for scheduling
+
+```rust
+pub struct OrderService {
+    storage: Arc<dyn Storage>,
+}
+
+impl OrderService {
+    pub fn new(storage: Arc<dyn Storage>) -> Self {
+        Self { storage }
+    }
+    
+    pub async fn init(&self, order: Order) -> Result<Order, ServiceError> {
+        // Order initialization logic
+    }
+    
+    pub async fn confirm(&self, order_id: &str) -> Result<Order, ServiceError> {
+        // Order confirmation logic
+    }
+    
+    pub async fn status(&self, order_id: &str) -> Result<OrderStatus, ServiceError> {
+        // Order status checking logic
+    }
+}
+```
+
+#### FulfillmentService
+
+Handles scheduling and delivery of healthcare services:
+- Manages provider availability and time slots
+- Processes appointment booking and rescheduling
+- Tracks fulfillment state transitions
+- Ensures fulfillment compliance with order terms
+
+```rust
+pub struct FulfillmentService {
+    storage: Arc<dyn Storage>,
+}
+
+impl FulfillmentService {
+    pub fn new(storage: Arc<dyn Storage>) -> Self {
+        Self { storage }
+    }
+    
+    pub async fn create_fulfillment(&self, fulfillment: Fulfillment) 
+        -> Result<Fulfillment, ServiceError> {
+        // Fulfillment creation logic
+    }
+    
+    pub async fn check_availability(
+        &self, 
+        provider_id: &str, 
+        requested_time: &DateTime<Utc>,
+        duration_seconds: i64
+    ) -> Result<bool, ServiceError> {
+        // Availability checking logic
+    }
+    
+    pub async fn update_state(
+        &self,
+        fulfillment_id: &str,
+        state: &str,
+        context: Option<HashMap<String, String>>
+    ) -> Result<Fulfillment, ServiceError> {
+        // State transition logic
+    }
+}
+```
+
+#### ProviderService
+
+Manages healthcare provider information:
+- Handles provider registration and profiles
+- Tracks provider specialties and qualifications
+- Monitors provider availability and working hours
+- Validates provider credentials
+
+```rust
+pub struct ProviderService {
+    storage: Arc<dyn Storage>,
+}
+
+impl ProviderService {
+    pub fn new(storage: Arc<dyn Storage>) -> Self {
+        Self { storage }
+    }
+    
+    pub async fn register_provider(&self, provider: Provider) -> Result<Provider, ServiceError> {
+        // Provider registration logic
+    }
+    
+    pub async fn check_provider_availability(
+        &self,
+        provider_id: &str,
+        requested_time: &DateTime<Utc>
+    ) -> Result<bool, ServiceError> {
+        // Provider availability checking logic
+    }
+    
+    pub async fn find_providers_by_specialty(
+        &self,
+        specialty: &str
+    ) -> Result<Vec<Provider>, ServiceError> {
+        // Provider search logic
+    }
+}
+```
+
+#### NetworkRegistryService
+
+Manages the registry of participants in the UHI network:
+- Handles subscriber registration and verification
+- Processes subscriber lookups
+- Validates subscriber credentials
+- Maintains subscriber metadata
+
+```rust
+pub struct NetworkRegistryService {
+    storage: Arc<dyn Storage>,
+}
+
+impl NetworkRegistryService {
+    pub fn new(storage: Arc<dyn Storage>) -> Self {
+        Self { storage }
+    }
+    
+    pub async fn register_subscriber(&self, subscriber: Subscriber) 
+        -> Result<Subscriber, ServiceError> {
+        // Subscriber registration logic
+    }
+    
+    pub async fn lookup_subscriber(&self, lookup: NetworkRegistryLookup) 
+        -> Result<Subscriber, ServiceError> {
+        // Subscriber lookup logic
+    }
+    
+    pub async fn validate_signature(
+        &self,
+        subscriber_id: &str,
+        signature: &str,
+        data: &[u8]
+    ) -> Result<bool, ServiceError> {
+        // Signature validation logic
+    }
+}
+```
+
 ### 4. Storage Layer (`src/storage/`)
 
 The storage layer handles data persistence through a trait-based interface:
@@ -123,6 +301,21 @@ The storage layer handles data persistence through a trait-based interface:
 * **Storage Trait**: Defines abstract interface for data access
 * **PostgreSQL Implementation**: Implements storage trait for PostgreSQL
 * **In-Memory Implementation**: Implements storage trait for testing
+
+The Storage trait is defined as follows:
+
+```rust
+#[async_trait]
+pub trait Storage: Send + Sync {
+    async fn get_provider(&self, id: &str) -> Result<Provider, StorageError>;
+    async fn create_provider(&self, provider: Provider) -> Result<Provider, StorageError>;
+    async fn update_provider(&self, provider: Provider) -> Result<Provider, StorageError>;
+    async fn delete_provider(&self, id: &str) -> Result<(), StorageError>;
+    async fn list_providers(&self) -> Result<Vec<Provider>, StorageError>;
+    
+    // Similar methods for other entities (Catalog, Order, Fulfillment, etc.)
+}
+```
 
 Storage instances are created in `main.rs`, wrapped in an `Arc`, and injected into services:
 
@@ -157,30 +350,45 @@ This approach ensures:
 - Consistent error handling across layers
 - Proper resource sharing with Arc
 
-### 6. Error Handling (`src/errors/`)
+## Service Interactions
 
-Comprehensive error handling system:
+The services interact with each other to fulfill complex business requirements:
 
-* **Error Types**: Custom error types for different failure scenarios
-* **HTTP Integration**: Maps domain errors to appropriate HTTP status codes
-* **Error Propagation**: Structured error propagation across layers
-* **Contextual Information**: Enriches errors with contextual information
+1. **Search Flow**:
+   - `SearchService` → `ProviderService` for provider information
+   - `SearchService` → `FulfillmentService` for availability information
 
-### 7. Configuration (`src/config.rs`)
+2. **Selection Flow**:
+   - `CatalogService` → `ProviderService` for provider details
+   - `CatalogService` → `FulfillmentService` for availability checking
 
-* Environment-based configuration
-* Database connection settings
-* Gateway settings
-* Logging configuration
-* Security configuration (keys, auth)
+3. **Order Flow**:
+   - `OrderService` → `CatalogService` for item details and pricing
+   - `OrderService` → `FulfillmentService` for appointment scheduling
+   - `OrderService` → `ProviderService` for provider information
 
-### 8. Logging (`src/logging.rs`)
+4. **Fulfillment Flow**:
+   - `FulfillmentService` → `ProviderService` for provider availability
 
-* Structured logging using tracing
-* Request/response logging
-* Transaction tracing across components
-* Error logging with context
-* Performance metrics
+5. **Registry Operations**:
+   - `NetworkRegistryService` operates independently for registry management
+   - Other services consult `NetworkRegistryService` for participant information
+
+## Error Handling
+
+The service layer implements a unified error handling approach:
+
+1. **Error Types**: Each service operation returns `Result<T, ServiceError>`.
+2. **Error Categories**:
+   - `NotFound`: Resource not found errors
+   - `Validation`: Input validation errors
+   - `BusinessLogic`: Business rule violation errors
+   - `Storage`: Underlying storage errors
+   - `External`: External system integration errors
+   - `Internal`: Unexpected internal errors
+
+3. **Error Propagation**: Errors are propagated from the storage layer through services to handlers.
+4. **Error Translation**: Storage errors are translated to service-level errors with appropriate context.
 
 ## Key Architectural Patterns
 
@@ -191,17 +399,21 @@ Comprehensive error handling system:
 5. **Async/Await**: Leverages Rust's async capabilities for non-blocking I/O
 6. **Error Propagation**: Structured error handling across architectural layers
 
-## Data Flow
+## Data Flow Example: Appointment Booking
 
-### Search Flow Example:
-1. EUA sends search request to Gateway
+1. Patient sends search request to UHI Gateway
 2. Gateway routes to SearchHandler
-3. SearchHandler validates request and calls SearchService
-4. SearchService processes request and accesses storage
-5. SearchService forwards request to appropriate HSPAs via adapter
-6. HSPAs respond with on_search to Gateway
-7. Gateway routes on_search responses to EUA
-8. EUA displays search results to user
+3. SearchHandler calls SearchService.search()
+4. SearchService processes request and forwards to appropriate HSPAs
+5. HSPAs respond with on_search to Gateway
+6. Gateway routes on_search responses to patient
+7. Patient selects an appointment slot via select request
+8. CatalogService processes selection and generates quotation
+9. Patient initializes order with init request
+10. OrderService creates provisional booking and prepares payment information
+11. Patient confirms order with confirm request
+12. OrderService finalizes booking and generates confirmation
+13. FulfillmentService tracks appointment status through its lifecycle
 
 ## Development Guidelines
 
@@ -217,25 +429,18 @@ Comprehensive error handling system:
    * Format responses consistently
    * Use dependency injection for services via web::Data
 
-3. **Error Handling**:
-   * Use custom error types for domain-specific errors
-   * Implement proper error propagation
-   * Log errors with context
-   * Provide meaningful error messages
+3. **Testing Strategy**:
+   * Unit tests: Test business logic in services with mock storage
+   * Integration tests: Test APIs with in-memory storage
+   * Performance tests: Benchmark critical operations
 
-4. **Testing**:
-   * Unit tests for business logic in services
-   * Integration tests for API endpoints
-   * Mock tests for external dependencies
-   * Error handling tests
-
-5. **Performance**:
+4. **Performance Considerations**:
    * Use async/await for I/O operations
    * Implement connection pooling
    * Cache frequently accessed data
    * Monitor and optimize database queries
 
-6. **Security**:
+5. **Security**:
    * Validate all inputs
    * Use proper authentication (X-Gateway-Authorization)
    * Secure database connections
