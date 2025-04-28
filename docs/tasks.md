@@ -59,12 +59,13 @@ This document outlines the detailed tasks for implementing the Unified Health In
   - [ ] Implement advanced search criteria matching
   - [ ] Implement result filtering and sorting
 - [ ] Implement catalog service
-  - [ ] Define service interface
-  - [ ] Implement catalog management
-  - [ ] Implement select functionality
-  - [ ] Implement on_select functionality
-  - [ ] Implement pricing and quotation
-  - [ ] Implement item availability checking
+  - [x] Define service interface
+  - [x] Implement catalog management
+  - [x] Implement select functionality
+  - [x] Implement on_select functionality
+  - [x] Implement pricing and quotation
+  - [x] Implement item availability checking
+  - [ ] Implement advanced business rules for discounts
 - [ ] Implement order service
   - [ ] Define service interface
   - [ ] Implement order creation

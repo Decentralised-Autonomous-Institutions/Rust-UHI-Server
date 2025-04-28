@@ -70,6 +70,9 @@ pub struct Catalog {
 
     /// Items in the catalog
     pub items: Vec<Item>,
+    
+    /// Expiration time for catalog freshness
+    pub exp: Option<DateTime<Utc>>,
 }
 
 /// Search request for finding catalog items
