@@ -1,6 +1,6 @@
 # UHI Project Tasks
 
-This document outlines the detailed tasks for implementing the Universal Health Interface (UHI) project. Tasks are organized by component and broken down into subtasks for easier tracking and implementation.
+This document outlines the detailed tasks for implementing the Unified Health Interface (UHI) project. Tasks are organized by component and broken down into subtasks for easier tracking and implementation.
 
 ## 1. Core UHI Gateway Server
 

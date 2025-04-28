@@ -1,6 +1,6 @@
-# Universal Health Interface (UHI) Protocol Implementation
+# Unified Health Interface (UHI) Protocol Implementation
 
-This repository contains a Rust implementation of the Universal Health Interface (UHI) Protocol, which aims to standardize healthcare interactions between patients, healthcare providers, and other stakeholders in the healthcare ecosystem.
+This repository contains a Rust implementation of the Unified Health Interface (UHI) Protocol, which aims to standardize healthcare interactions between patients, healthcare providers, and other stakeholders in the healthcare ecosystem.
 
 ## Project Structure
 

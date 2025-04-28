@@ -1,7 +1,7 @@
 # UHI Project Status
 
 ## Project Overview
-The Universal Health Interface (UHI) project aims to create an open protocol for digital health services, enabling seamless interactions between patients and healthcare service providers. The project consists of several components:
+The Unified Health Interface (UHI) project aims to create an open protocol for digital health services, enabling seamless interactions between patients and healthcare service providers. The project consists of several components:
 
 1. **UHI Gateway Server** - Core implementation of the UHI Protocol
 2. **End User Application (EUA)** - Front-end interfaces for patients

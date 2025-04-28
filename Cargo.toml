@@ -3,7 +3,7 @@ name = "rust-uhi"
 version = "0.1.0"
 edition = "2021"
 authors = ["Airesh Bhat (nelliairesh@gmail.com)"]
-description = "Universal Health Interface (UHI) Protocol Implementation"
+description = "Unifiecd Health Interface (UHI) Protocol Implementation"
 readme = "README.md"
 license = "MIT"
 

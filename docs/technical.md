@@ -2,7 +2,7 @@
 
 ## Overview
 
-This document outlines the technical architecture for the Universal Health Interface (UHI) protocol implementation built using Rust, Actix-web, and SQLx. The UHI is an open protocol for various digital health services, enabling a wide variety of interactions between patients and health service providers (HSPs) including appointment booking, teleconsultation, service discovery, and others.
+This document outlines the technical architecture for the Unified Health Interface (UHI) protocol implementation built using Rust, Actix-web, and SQLx. The UHI is an open protocol for various digital health services, enabling a wide variety of interactions between patients and health service providers (HSPs) including appointment booking, teleconsultation, service discovery, and others.
 
 ## Technology Stack
 
