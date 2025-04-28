@@ -34,6 +34,56 @@ pub enum ParticipantStatus {
     Suspended,
 }
 
+/// Subscriber in the network registry
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct Subscriber {
+    /// Unique ID for the subscriber
+    pub id: String,
+    
+    /// Type of subscriber (EUA, HSP, GATEWAY)
+    pub type_field: String,
+    
+    /// Domain of operation
+    pub domain: String,
+    
+    /// City of operation
+    pub city: Option<String>,
+    
+    /// Country of operation
+    pub country: Option<String>,
+    
+    /// Base URL for the subscriber
+    pub url: String,
+    
+    /// Status of the subscriber
+    pub status: String,
+    
+    /// Public key for signature verification
+    pub public_key: String,
+    
+    /// Time when the subscriber was created
+    pub created_at: DateTime<Utc>,
+    
+    /// Time when the subscriber was last updated
+    pub updated_at: DateTime<Utc>,
+}
+
+/// Network registry lookup criteria
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct NetworkRegistryLookup {
+    /// Type of subscriber to look up
+    pub type_field: String,
+    
+    /// Domain to look up
+    pub domain: String,
+    
+    /// City to filter by (optional)
+    pub city: Option<String>,
+    
+    /// Country to filter by (optional)
+    pub country: Option<String>,
+}
+
 /// Network participant
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct Participant {

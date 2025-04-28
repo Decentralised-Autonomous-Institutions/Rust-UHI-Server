@@ -24,17 +24,26 @@ This document outlines the detailed tasks for implementing the Universal Health 
 - [x] Implement serialization/deserialization
 
 ### 1.3 Storage Layer
-- [ ] Define storage trait interface
-- [ ] Create database schema* (Backlog)
-- [ ] Implement database migrations* (Backlog)
-- [ ] Implement PostgreSQL storage* (Backlog)
+- [x] Define storage trait interface
+- [ ] Implement in-memory storage for testing and development
+  - [x] Define in-memory data structures
+  - [x] Implement in-memory provider operations
+  - [x] Implement in-memory catalog operations
+  - [x] Implement in-memory fulfillment operations
+  - [x] Implement in-memory order operations
+  - [x] Implement in-memory network registry operations
+  - [x] Implement in-memory transaction tracking
+- [ ] Create mock data for testing with in-memory storage
+- [ ] Write unit tests for in-memory storage
+- [ ] **(Later Phase)** Create database schema
+- [ ] **(Later Phase)** Implement database migrations
+- [ ] **(Later Phase)** Implement PostgreSQL storage
   - [ ] Provider operations
   - [ ] Catalog operations
   - [ ] Fulfillment operations
   - [ ] Order operations
   - [ ] Network registry operations
   - [ ] Transaction tracking
-- [ ] Implement in-memory storage for testing
 
 ### 1.4 Service Layer
 - [ ] Implement search service
@@ -73,6 +82,7 @@ This document outlines the detailed tasks for implementing the Universal Health 
 - [x] Implement search handlers
   - [x] Handle search
   - [x] Handle on_search
+- [ ] Update search handlers to use the service layer
 - [ ] Implement select handlers
   - [ ] Handle select
   - [ ] Handle on_select
@@ -89,15 +99,13 @@ This document outlines the detailed tasks for implementing the Universal Health 
   - [ ] Handle lookup
 
 ### 1.7 Testing
-- [ ] Unit tests
-  - [ ] Model tests
-  - [ ] Service tests
-  - [ ] Handler tests
-  - [ ] Middleware tests
-- [ ] Integration tests
-  - [ ] API tests
-  - [ ] Storage tests
-- [ ] Load tests
+- [ ] Create test fixtures and helpers
+- [ ] Unit tests for models
+- [ ] Unit tests for service layer with in-memory storage
+- [ ] Unit tests for handlers with mocked services
+- [ ] Integration tests for API endpoints using in-memory storage
+- [ ] **(Later Phase)** Integration tests with PostgreSQL
+- [ ] **(Later Phase)** Load tests
   - [ ] Performance testing
   - [ ] Scalability testing
 

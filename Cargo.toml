@@ -36,6 +36,7 @@ uuid = { version = "1.6", features = ["serde", "v4"] }
 chrono = { version = "0.4", features = ["serde"] }
 dotenv = "0.15"
 config = "0.13"
+async-trait = "0.1"
 
 # Metrics
 prometheus-client = "0.22"

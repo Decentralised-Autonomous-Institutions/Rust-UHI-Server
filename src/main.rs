@@ -4,6 +4,7 @@ mod handlers;
 mod logging;
 mod models;
 mod routes;
+mod storage;
 
 use actix_web::{App, HttpServer, middleware, web};
 use dotenv::dotenv;
@@ -11,6 +12,8 @@ use tracing_actix_web::TracingLogger;
 
 use crate::config::AppConfig;
 use crate::routes::configure_routes;
+use crate::storage::memory::MemoryStorage;
+use std::sync::Arc;
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
@@ -24,6 +27,9 @@ async fn main() -> std::io::Result<()> {
     logging::init_logging(&config.logging);
     
     tracing::info!("Starting UHI Gateway server on {}:{}", config.server.host, config.server.port);
+    
+    // Initialize storage
+    let storage = Arc::new(MemoryStorage::new());
     
     // Store config values for the HTTP server
     let server_host = config.server.host.clone();
@@ -41,6 +47,8 @@ async fn main() -> std::io::Result<()> {
             .configure(configure_routes)
             // Configure app state with configuration
             .app_data(web::Data::new(config.clone()))
+            // Add storage to application state
+            .app_data(web::Data::new(storage.clone()))
     })
     .bind(format!("{}:{}", server_host, server_port))?
     .workers(server_workers)
