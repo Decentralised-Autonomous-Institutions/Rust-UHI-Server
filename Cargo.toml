@@ -47,6 +47,11 @@ hmac = "0.12"
 sha2 = "0.10"
 base64 = "0.21"
 
+# Network registry
+ring = "0.17"
+reqwest = { version = "0.11", features = ["json"] }
+url = "2.4"
+
 [dev-dependencies]
 mockall = "0.12"
 test-case = "3.3"

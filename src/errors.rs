@@ -1,6 +1,7 @@
 use actix_web::{HttpResponse, ResponseError};
 use serde::{Deserialize, Serialize};
 use thiserror::Error;
+use crate::services::error::ServiceError;
 
 #[derive(Debug, Error)]
 pub enum AppError {
@@ -70,5 +71,18 @@ impl ResponseError for AppError {
         };
 
         HttpResponse::build(status_code).json(error_response)
+    }
+}
+
+impl From<ServiceError> for AppError {
+    fn from(err: ServiceError) -> Self {
+        match err {
+            ServiceError::NotFound(msg) => AppError::NotFoundError(msg),
+            ServiceError::Validation(msg) => AppError::ValidationError(msg),
+            ServiceError::ExternalService(msg) => AppError::ExternalServiceError(msg),
+            ServiceError::BusinessLogic(msg) => AppError::InternalError(msg),
+            ServiceError::Internal(msg) => AppError::InternalError(msg),
+            ServiceError::Storage(storage_err) => AppError::InternalError(storage_err.to_string()),
+        }
     }
 }

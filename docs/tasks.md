@@ -67,21 +67,23 @@ This document outlines the detailed tasks for implementing the Unified Health In
   - [x] Implement item availability checking
   - [ ] Implement advanced business rules for discounts
 - [ ] Implement order service
-  - [ ] Define service interface
-  - [ ] Implement order creation
-  - [ ] Implement init functionality
-  - [ ] Implement on_init functionality
-  - [ ] Implement confirm functionality
-  - [ ] Implement on_confirm functionality
-  - [ ] Implement status functionality
-  - [ ] Implement on_status functionality
+  - [x] Define service interface
+  - [x] Implement order creation
+  - [x] Implement init functionality
+  - [x] Implement on_init functionality
+  - [x] Implement confirm functionality
+  - [x] Implement on_confirm functionality
+  - [x] Implement status functionality
+  - [x] Implement on_status functionality
   - [ ] Implement order state transitions
 - [ ] Implement fulfillment service
-  - [ ] Define service interface
-  - [ ] Implement basic CRUD operations
-  - [ ] Implement provider availability checking
-  - [ ] Implement time slot validation
-  - [ ] Implement state transitions
+  - [x] Define service interface
+  - [x] Implement create_fulfillment functionality
+  - [x] Implement get_fulfillment functionality
+  - [x] Implement update_fulfillment functionality
+  - [x] Implement list_fulfillments_by_provider functionality
+  - [x] Implement check_availability functionality
+  - [x] Implement update_state functionality
   - [ ] Implement buffer management
   - [ ] Implement recurring appointment handling
 - [ ] Implement provider service
@@ -93,11 +95,11 @@ This document outlines the detailed tasks for implementing the Unified Health In
   - [x] Implement location-based search
   - [ ] Implement credential validation
 - [ ] Implement network registry service
-  - [ ] Define service interface
-  - [ ] Implement subscriber registration
-  - [ ] Implement subscriber lookup
-  - [ ] Implement signature validation
-  - [ ] Implement domain verification
+  - [x] Define service interface
+  - [x] Implement subscriber registration
+  - [x] Implement subscriber lookup
+  - [x] Implement signature validation
+  - [x] Implement domain verification
   - [ ] Implement certificate management
 
 ### 1.5 Service Integration

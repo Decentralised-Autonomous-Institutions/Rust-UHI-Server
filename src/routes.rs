@@ -1,7 +1,7 @@
 use crate::handlers::{
     confirm::{confirm, on_confirm},
     init::{init, on_init},
-    network_registry::lookup,
+    network_registry::{lookup, validate_signature},
     search::{on_search, search},
     select::{on_select, select},
     status::{on_status, status},
@@ -27,6 +27,7 @@ pub fn configure_routes(cfg: &mut web::ServiceConfig) {
             .route("/status", web::post().to(status))
             .route("/on_status", web::post().to(on_status))
             // Network registry endpoints
-            .route("/networkregistry/lookup", web::post().to(lookup)),
+            .route("/networkregistry/lookup", web::post().to(lookup))
+            .route("/networkregistry/validate", web::post().to(validate_signature)),
     );
 }

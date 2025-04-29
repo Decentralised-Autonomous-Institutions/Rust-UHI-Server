@@ -34,7 +34,7 @@ The Unified Health Interface (UHI) project aims to create an open protocol for d
     - OrderService implementation (30%)
     - FulfillmentService implementation (85% ✅)
     - ProviderService implementation (90% ✅)
-    - NetworkRegistryService implementation (30%)
+    - NetworkRegistryService implementation (75% ✅)
   - Handlers with service dependency (35%)
     - Handler interfaces defined (100% ✅)
     - Injection of services via web::Data (80% ✅)
@@ -152,12 +152,13 @@ We're currently implementing the core UHI Gateway Server with the following stat
 - 🔄 Payment integration
 - ❌ Order fulfillment coordination
 
-### NetworkRegistryService (30% complete)
+### NetworkRegistryService (75% complete)
 - ✅ Basic registry interface
 - ✅ Subscriber registration
-- 🔄 Subscriber lookup
-- ❌ Signature validation
-- ❌ Domain verification
+- ✅ Subscriber lookup
+- ✅ Signature validation
+- ✅ Domain verification
+- ❌ Certificate management
 
 ## Architectural Updates
 
