@@ -24,41 +24,43 @@ The Unified Health Interface (UHI) project aims to create an open protocol for d
 - Basic logging setup (✅ completed)
 
 ### In Progress
-- Core UHI Gateway Server implementation (55%)
+- Core UHI Gateway Server implementation (60%)
   - HTTP routing layer (100% ✅)
-  - Service layer with dependency injection (50%)
+  - Service layer with dependency injection (65%)
     - Service interfaces defined (100% ✅)
     - Constructor-based storage injection design (100% ✅)
     - SearchService implementation (60% ✅)
     - CatalogService implementation (80% ✅)
-    - OrderService implementation (10%)
-    - FulfillmentService implementation (80% ✅)
-    - ProviderService implementation (60% ✅)
+    - OrderService implementation (30%)
+    - FulfillmentService implementation (85% ✅)
+    - ProviderService implementation (90% ✅)
     - NetworkRegistryService implementation (30%)
-  - Handlers with service dependency (30%)
+  - Handlers with service dependency (35%)
     - Handler interfaces defined (100% ✅)
     - Injection of services via web::Data (80% ✅)
     - Search handlers updated to use service layer (40%)
     - Select handlers updated to use service layer (20%)
-    - Init/Confirm/Status handlers updated to use service layer (10%)
+    - Init/Confirm/Status handlers updated to use service layer (30%)
   - Database schema and migrations (0%)
   - Authentication/authorization middleware (0%)
   - Storage trait interfaces (100% ✅)
   - In-memory storage implementation (80% ✅)
   - Error handling framework (100% ✅)
   - Data models (100% ✅)
-- Dependency injection implementation (60%)
-  - Storage initialization in main.rs (80%)
-  - Service creation with storage injection (80%)
-  - Service registration with Actix app (50%)
-- Service interaction and integration (25%)
-  - FulfillmentService integration with ProviderService (70%)
-  - CatalogService integration with FulfillmentService (20%)
-  - OrderService integration with other services (10%)
-- Unit tests for core components (30%)
-  - Tests for service layer with mock storage (30%)
+- Dependency injection implementation (70%)
+  - Storage initialization in main.rs (100% ✅)
+  - Service creation with storage injection (100% ✅)
+  - Service registration with Actix app (70%)
+- Service interaction and integration (40%)
+  - FulfillmentService integration with ProviderService (80% ✅)
+  - CatalogService integration with FulfillmentService (30%)
+  - OrderService integration with FulfillmentService (70% ✅)
+  - OrderService integration with other services (20%)
+- Unit tests for core components (40%)
+  - Tests for service layer with mock storage (40%)
   - Tests for fulfillment service with in-memory storage (100% ✅)
   - Tests for provider service with in-memory storage (100% ✅)
+  - Tests for order service with in-memory storage (50%)
   - Tests for handlers with mocked services (15%)
 
 ### Planned (Not Started)
@@ -82,11 +84,11 @@ We're currently implementing the core UHI Gateway Server with the following stat
 - **HTTP Layer**: Implemented route definitions and basic middleware setup.
 - **Handler Layer**: Basic handlers are in place, updating to use service dependency injection.
 - **Service Layer**: Service interfaces defined and implementing dependency injection pattern. Implementation progress varies by service:
-  - **FulfillmentService**: Well-implemented (80%) with comprehensive availability checking, time slot validation, and state management.
-  - **ProviderService**: Good implementation progress (60%) with provider management, availability checking, and specialty-based search.
+  - **FulfillmentService**: Well-implemented (85%) with comprehensive availability checking, time slot validation, state management, and state transition validation.
+  - **ProviderService**: Well-implemented (90%) with provider management, availability checking (including working hours and breaks), specialty-based search, and location-based search.
   - **SearchService**: Enhanced implementation (60%) with basic search functionality, search request validation, transaction tracking, and provider identification.
   - **CatalogService**: Enhanced implementation (80%) with catalog management, validation, selection handling, quotation generation, and availability checking.
-  - **OrderService**: Early implementation stage (10%) with basic order creation.
+  - **OrderService**: Implementation progressing (30%) with order creation, basic order management, and integration with FulfillmentService for status checking.
   - **NetworkRegistryService**: Partial implementation (30%) with basic registry operations.
 - **Storage Layer**: Defined traits, implemented in-memory storage for testing and development.
 - **Error Handling**: Implemented comprehensive error handling system.
@@ -94,7 +96,7 @@ We're currently implementing the core UHI Gateway Server with the following stat
 - **Data Models**: Implemented all required data models based on the UHI Protocol specification.
 - **Dependency Flow**: Implementing pattern where storage is injected into services, and services are injected into handlers.
 
-**Progress**: 55% complete
+**Progress**: 60% complete
 
 ## Service Layer Implementation Details
 
@@ -121,28 +123,33 @@ We're currently implementing the core UHI Gateway Server with the following stat
 - 🔄 Dynamic pricing capabilities
 - ❌ Advanced business rules for discounts and bundles
 
-### FulfillmentService (80% complete)
+### FulfillmentService (85% complete)
 - ✅ Core fulfillment management functionality
 - ✅ Availability checking
 - ✅ Time slot management
-- ✅ State transitions
+- ✅ State transitions with validation
 - ✅ Integration with ProviderService
+- ✅ State machine implementation for fulfillment tracking
 - 🔄 Appointment scheduling
 - ❌ Recurring appointment handling
 
-### ProviderService (60% complete)
+### ProviderService (90% complete)
 - ✅ Provider registration and management
 - ✅ Provider availability checking
 - ✅ Working hours validation
 - ✅ Provider search by specialty
-- 🔄 Provider search by location
+- ✅ Provider search by location
+- ✅ Working hours model implementation
+- ✅ Time-based availability checking with breaks
 - ❌ Provider credential validation
 
-### OrderService (10% complete)
+### OrderService (30% complete)
 - ✅ Basic order interface
-- 🔄 Order creation
-- ❌ Order state management
-- ❌ Payment integration
+- ✅ Order creation
+- ✅ Integration with FulfillmentService for status checking
+- ✅ Bidirectional state synchronization with fulfillments
+- 🔄 Order state management
+- 🔄 Payment integration
 - ❌ Order fulfillment coordination
 
 ### NetworkRegistryService (30% complete)
@@ -196,3 +203,23 @@ We've updated our architectural approach to use a cleaner dependency injection p
 8. Implement integration tests for end-to-end flows
 9. Update API documentation with OpenAPI specification
 10. Prepare for Phase 2: EUA and HSPA development
+
+## Recent Implementation Highlights
+
+1. **Status Checking Flow Implementation**: 
+   - Implemented bidirectional synchronization between OrderService and FulfillmentService
+   - Added state validation in FulfillmentService with a proper state machine
+   - Updated status handlers to use the service layer
+   - Implemented automatic state mapping between order states and fulfillment states
+   - Added comprehensive unit tests for the status flow
+
+2. **Service Integration Improvements**:
+   - OrderService now depends on FulfillmentService for status checking
+   - FulfillmentService maintains state consistency with OrderService
+   - Status updates propagate bidirectionally between orders and fulfillments
+   - Service interfaces follow consistent patterns and error handling
+
+3. **Handler Layer Updates**:
+   - Status handlers now use OrderService for processing
+   - Handlers properly propagate errors to HTTP responses
+   - Clear separation of concerns with handlers only interacting with services

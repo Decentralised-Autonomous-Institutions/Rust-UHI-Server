@@ -85,12 +85,12 @@ This document outlines the detailed tasks for implementing the Unified Health In
   - [ ] Implement buffer management
   - [ ] Implement recurring appointment handling
 - [ ] Implement provider service
-  - [ ] Define service interface
-  - [ ] Implement basic CRUD operations
-  - [ ] Implement provider availability checking
-  - [ ] Implement working hours validation
-  - [ ] Implement specialty-based search
-  - [ ] Implement location-based search
+  - [x] Define service interface
+  - [x] Implement basic CRUD operations
+  - [x] Implement provider availability checking
+  - [x] Implement working hours validation
+  - [x] Implement specialty-based search
+  - [x] Implement location-based search
   - [ ] Implement credential validation
 - [ ] Implement network registry service
   - [ ] Define service interface
@@ -113,7 +113,7 @@ This document outlines the detailed tasks for implementing the Unified Health In
   - [ ] Implement selection flow
   - [ ] Implement order initialization flow
   - [ ] Implement order confirmation flow
-  - [ ] Implement status checking flow
+  - [x] Implement status checking flow
 
 ### 1.6 HTTP Layer
 - [x] Define API routes
